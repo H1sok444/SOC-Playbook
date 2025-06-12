@@ -1,1 +1,27 @@
 
+[
+  {
+    "id": 1,
+    "type": "Phishing",
+    "severity": "High",
+    "steps": [
+      "Isoler l'utilisateur ciblé",
+      "Collecter l'e-mail suspect",
+      "Analyser l'URL ou la pièce jointe",
+      "Mettre à jour les règles de détection",
+      "Prévenir les utilisateurs"
+    ]
+  },
+  {
+    "id": 2,
+    "type": "Malware",
+    "severity": "Critical",
+    "steps": [
+      "Déconnecter la machine du réseau",
+      "Faire une image disque",
+      "Analyser les IOC",
+      "Notifier les équipes",
+      "Mettre à jour les signatures"
+    ]
+  }
+]
