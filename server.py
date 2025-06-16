@@ -23,7 +23,7 @@ def handle_client(conn):
             else:
                 response = "Playbook introuvable."
         elif data.lower() in ['exit', 'quit']:
-            conn.sendall(b"A bientôt !\n")
+            conn.sendall("À bientôt !\n".encode('utf-8'))
             break
         else:
             response = "Commande inconnue. Tape 'list' ou un ID."
