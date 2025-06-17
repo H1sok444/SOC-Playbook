@@ -1,0 +1,964 @@
+[
+  {
+    "id": 1,
+    "name": "DoS Attack on DNS Server",
+    "type": "DoS Attack",
+    "severity": "High",
+    "data": {
+      "title": "Attaque DoS sur serveur DNS",
+      "description": "Une attaque par déni de service (DoS) sur un serveur DNS vise à rendre le service DNS indisponible en le submergeant de trafic malveillant. Cela peut empêcher les utilisateurs de résoudre les noms de domaine en adresses IP, rendant ainsi inaccessibles les sites web et services dépendants de ce serveur DNS.",
+      "sids": [
+        1,
+        2,
+        1040,
+        1008,
+        1009
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Vérifier les alertes: Confirmer les alertes générées par les SIDs associés (1, 2, 1040, 1008, 1009) dans le système de surveillance (OSSIM).",
+            "Analyser le trafic: Examiner les logs du serveur DNS et le trafic réseau pour identifier la source et la nature de l'attaque (volume, type de requêtes, adresses IP suspectes).",
+            "Vérifier la disponibilité du service: Tenter d'accéder à des services dépendants du DNS pour confirmer l'impact de l'attaque."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Isolation: Si possible, isoler le serveur DNS attaqué du reste du réseau pour éviter la propagation de l'attaque.",
+            "Filtrage du trafic: Mettre en place des règles de filtrage au niveau du pare-feu ou du routeur pour bloquer le trafic provenant des adresses IP malveillantes identifiées.",
+            "Limitation de débit: Appliquer des limitations de débit sur le trafic DNS pour éviter la saturation du serveur.",
+            "Utilisation de services anti-DDoS: Si disponible, activer les protections anti-DDoS fournies par un fournisseur de services (ex: CDN, scrubbers)."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Nettoyage: Supprimer toute configuration malveillante ou modification non autorisée sur le serveur DNS.",
+            "Mise à jour des systèmes: S'assurer que le serveur DNS et les systèmes de sécurité sont à jour avec les derniers correctifs."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablissement du service: Une fois l'attaque contenue et éradiquée, rétablir le service DNS en désactivant les mesures de contention temporaires.",
+            "Surveillance accrue: Maintenir une surveillance étroite du serveur DNS pour détecter toute récidive ou nouvelle attaque."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Analyse post-mortem: Documenter l'incident, les mesures prises, leur efficacité et les leçons apprises.",
+            "Amélioration des défenses: Mettre en œuvre des mesures préventives supplémentaires pour renforcer la résilience du serveur DNS face aux attaques DoS (ex: renforcement de la configuration DNS, déploiement de DNS secondaires, augmentation de la capacité).",
+            "Communication: Informer les parties prenantes internes et externes (si nécessaire) de l'incident et des mesures prises."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "name": "Scan Attack IPv4 Scan",
+    "type": "Reconnaissance",
+    "severity": "Medium",
+    "data": {
+      "title": "Scan Attack IPv4 Scan",
+      "description": "Un scan IPv4 est une activité de reconnaissance où un attaquant tente d'identifier les hôtes actifs et les ports ouverts sur un réseau. Bien que non intrinsèquement malveillant, il s'agit souvent d'une étape préliminaire à une attaque plus sophistiquée, permettant à l'attaquant de cartographier la surface d'attaque potentielle.",
+      "sids": [
+        1006,
+        1007
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Analyse",
+          "actions": [
+            "Vérifier les alertes: Confirmer les alertes générées par les SIDs associés (1006, 1007) dans le système de surveillance (OSSIM).",
+            "Identifier la source: Déterminer l'adresse IP source du scan. Est-ce interne ou externe ?",
+            "Identifier la cible: Déterminer les adresses IP cibles du scan. S'agit-il de serveurs critiques, de postes de travail, ou d'un balayage général ?",
+            "Analyser le type de scan: Examiner les logs pour comprendre le type de scan (SYN scan, UDP scan, etc.) et les ports ciblés.",
+            "Vérifier la légitimité: S'assurer que l'activité n'est pas un scan légitime (par exemple, un scan de vulnérabilité planifié ou un test d'intrusion)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer la source: Si le scan est malveillant et provient d'une source externe, bloquer l'adresse IP source au niveau du pare-feu ou du routeur.",
+            "Isoler les systèmes compromis: Si le scan a réussi à identifier des vulnérabilités et qu'une compromission est suspectée, isoler les systèmes affectés."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Supprimer les vulnérabilités: Corriger les vulnérabilités identifiées par le scan (par exemple, appliquer des correctifs, fermer les ports inutiles, renforcer les configurations).",
+            "Nettoyer les systèmes compromis: Si une compromission a eu lieu, nettoyer les systèmes affectés et restaurer les configurations saines."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablir les services: Rétablir les services affectés une fois les vulnérabilités corrigées et les systèmes sécurisés.",
+            "Surveillance accrue: Maintenir une surveillance accrue sur les systèmes ciblés et le réseau pour détecter toute nouvelle activité de scan ou tentative d'exploitation."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Analyse post-mortem: Documenter l'incident, les mesures prises, leur efficacité et les leçons apprises.",
+            "Amélioration des défenses: Mettre en œuvre des mesures préventives supplémentaires pour renforcer la sécurité du réseau (par exemple, durcissement des systèmes, segmentation du réseau, détection d'intrusion).",
+            "Mise à jour des règles de détection: Ajuster les règles de détection dans OSSIM pour mieux identifier les scans futurs."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "name": "IPS Traffic Detected",
+    "type": "Intrusion Prevention",
+    "severity": "High",
+    "data": {
+      "title": "Trafic Détecté par IPS",
+      "description": "Un système de prévention d'intrusion (IPS) a détecté et potentiellement bloqué du trafic réseau malveillant ou suspect. Cela indique une tentative d'attaque ou une activité anormale qui nécessite une investigation approfondie pour comprendre la nature de la menace et s'assurer qu'elle a été correctement contenue.",
+      "sids": [
+        1039
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Vérifier l'alerte IPS: Examiner les détails de l'alerte générée par le SID 1039 dans OSSIM. Noter l'heure, la source, la destination, le type d'attaque et la règle IPS déclenchée.",
+            "Analyser les logs IPS: Consulter les logs de l'IPS pour obtenir plus de contexte sur l'événement. Vérifier si le trafic a été bloqué ou seulement alerté.",
+            "Analyser le trafic réseau: Utiliser des outils d'analyse de paquets (ex: Wireshark) pour examiner le trafic réseau autour de l'heure de l'alerte, si possible, pour comprendre la nature exacte de l'activité.",
+            "Vérifier les systèmes cibles: Examiner les logs des systèmes cibles (serveurs, postes de travail) pour détecter toute activité suspecte (tentatives de connexion, modifications de fichiers, exécution de processus inconnus)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Confirmer le blocage: S'assurer que l'IPS a correctement bloqué le trafic malveillant. Si ce n'est pas le cas, bloquer manuellement la source ou la destination via le pare-feu.",
+            "Isoler les systèmes compromis: Si une compromission est confirmée ou fortement suspectée, isoler immédiatement les systèmes affectés du réseau.",
+            "Mettre à jour les règles IPS/pare-feu: Si l'attaque est nouvelle ou a contourné les règles existantes, créer ou mettre à jour les règles pour bloquer ce type de trafic à l'avenir."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Nettoyage: Supprimer tout logiciel malveillant, compte utilisateur non autorisé ou modification de configuration sur les systèmes compromis.",
+            "Correction des vulnérabilités: Identifier et corriger les vulnérabilités qui ont pu être exploitées ou ciblées par l'attaque."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablir les services: Une fois l'éradication terminée, rétablir les services et systèmes affectés en s'assurant de leur intégrité.",
+            "Surveillance accrue: Maintenir une surveillance renforcée sur les systèmes et le trafic réseau pour détecter toute récidive ou activité suspecte."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Analyse post-mortem: Documenter l'incident, y compris les détails de l'alerte, les actions entreprises, les résultats et les leçons apprises. Identifier les lacunes dans la détection ou la réponse.",
+            "Amélioration des défenses: Renforcer les défenses en mettant à jour les signatures IPS, en améliorant les règles de pare-feu, en effectuant des analyses de vulnérabilité régulières et en sensibilisant les utilisateurs.",
+            "Partage d'informations: Partager les informations sur la menace avec les équipes de renseignement sur les menaces ou d'autres organisations si pertinent."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "name": "SMTP Virus found",
+    "type": "Malware",
+    "severity": "High",
+    "data": {
+      "title": "Virus SMTP Détecté",
+      "description": "Un virus a été détecté dans un email transitant par le serveur SMTP. Cela indique une tentative de livraison de malware ou une infection existante qui utilise le courrier électronique pour se propager. Une action rapide est nécessaire pour contenir la menace et protéger le réseau.",
+      "sids": [
+        1206
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Vérifier l'alerte générée par le SID 1206 dans le système de surveillance (OSSIM).",
+            "Examiner les logs du serveur de messagerie (SMTP) pour identifier l'expéditeur, le destinataire, l'objet et les pièces jointes de l'email infecté.",
+            "Vérifier si d'autres emails similaires ont été envoyés ou reçus.",
+            "Analyser l'email et la pièce jointe (dans un environnement sécurisé/sandbox) pour confirmer la présence du virus et comprendre son comportement."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer l'expéditeur et les domaines malveillants au niveau du pare-feu et du serveur de messagerie.",
+            "Supprimer l'email infecté des boîtes de réception de tous les destinataires.",
+            "Isoler les systèmes potentiellement infectés qui ont interagi avec l'email ou la pièce jointe.",
+            "Mettre en quarantaine ou supprimer le fichier malveillant de tous les systèmes où il a été détecté."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Nettoyer les systèmes infectés à l'aide d'un logiciel antivirus à jour ou d'outils de suppression de malwares.",
+            "Mettre à jour les définitions antivirus sur tous les systèmes et serveurs.",
+            "Renforcer les configurations de sécurité des serveurs de messagerie et des passerelles de sécurité."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablir les systèmes nettoyés en production.",
+            "S'assurer que les services de messagerie fonctionnent normalement et que le trafic est propre.",
+            "Maintenir une surveillance accrue pour détecter toute récidive ou nouvelle activité suspecte."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter l'incident, y compris la source, la méthode d'attaque, l'impact et les mesures prises.",
+            "Analyser les leçons apprises pour améliorer les défenses futures (ex: sensibilisation des utilisateurs, renforcement des filtres anti-spam/antivirus).",
+            "Partager les informations sur la menace avec les équipes de renseignement sur les menaces si pertinent."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "name": "APT threat detected",
+    "type": "APT Attack",
+    "severity": "Critical",
+    "data": {
+      "title": "Menace APT Détectée",
+      "description": "No description available.",
+      "sids": [
+        1239
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Analyse",
+          "actions": [
+            "Vérifier l'alerte générée par le SID 1239 dans le système de surveillance (OSSIM).",
+            "Analyser les logs de tous les systèmes (réseau, serveurs, endpoints) pour des activités inhabituelles ou des indicateurs de compromission (IOCs) liés aux APTs (ex: communications C2, mouvements latéraux, exfiltration de données).",
+            "Utiliser des outils d'analyse comportementale et de renseignement sur les menaces pour identifier les schémas d'attaque APT.",
+            "Corréler les événements de sécurité pour obtenir une vue d'ensemble de l'étendue de la compromission."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Isoler les systèmes compromis du réseau pour empêcher la propagation de l'APT.",
+            "Bloquer les communications C2 connues au niveau du pare-feu et des passerelles de sécurité.",
+            "Révoquer les identifiants compromis et réinitialiser les mots de passe.",
+            "Mettre en place une surveillance accrue sur les systèmes non compromis pour détecter toute tentative d'accès."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Identifier et supprimer tous les accès persistants (backdoors, comptes non autorisés) laissés par l'APT.",
+            "Nettoyer les systèmes infectés et restaurer les configurations saines à partir de sauvegardes fiables.",
+            "Appliquer tous les correctifs de sécurité et mises à jour logicielles pour éliminer les vulnérabilités exploitées."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablir les systèmes nettoyés en production de manière progressive et contrôlée.",
+            "Mettre en œuvre des mesures de sécurité renforcées (ex: authentification multi-facteurs, segmentation réseau, surveillance continue).",
+            "Vérifier l'intégrité des données et des systèmes avant le retour à la normale."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Mener une analyse post-mortem approfondie pour comprendre la chaîne d'attaque complète, les outils et techniques utilisés par l'APT.",
+            "Documenter toutes les leçons apprises et les recommandations pour améliorer la posture de sécurité.",
+            "Partager les informations sur l'APT avec les agences de renseignement sur les menaces et les pairs de l'industrie si approprié.",
+            "Renforcer la sensibilisation des utilisateurs aux menaces APT et aux bonnes pratiques de sécurité."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "name": "DNS IPS match",
+    "type": "Exploit",
+    "severity": "Medium",
+    "data": {
+      "title": "Correspondance IPS DNS",
+      "description": "No description available.",
+      "sids": [
+        1275
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Analyse",
+          "actions": [
+            "Vérifier l'alerte générée par le SID 1275 dans le système de surveillance (OSSIM).",
+            "Examiner les logs de l'IPS et du serveur DNS pour obtenir des détails sur la correspondance (adresses IP source/destination, noms de domaine, type de requête DNS, heure).",
+            "Analyser le trafic DNS suspect pour identifier la nature exacte de l'activité (ex: tunneling DNS, requêtes vers des domaines de C2 connus, tentatives de résolution de noms malveillants).",
+            "Vérifier la réputation des domaines et adresses IP impliqués à l'aide de sources de renseignement sur les menaces."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer les adresses IP et les noms de domaine malveillants identifiés au niveau du pare-feu et du serveur DNS.",
+            "Si l'activité indique une compromission, isoler les systèmes affectés du réseau.",
+            "Mettre à jour les règles de l'IPS pour bloquer spécifiquement ce type de trafic DNS malveillant."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Nettoyer les systèmes compromis (si applicable) et supprimer tout malware ou configuration non autorisée.",
+            "Corriger les vulnérabilités qui ont pu être exploitées pour initier l'activité DNS malveillante.",
+            "Renforcer la sécurité du serveur DNS (ex: DNSSEC, limitation de requêtes, filtrage de contenu)."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablir les systèmes nettoyés en production.",
+            "S'assurer que le service DNS fonctionne normalement et que le trafic est propre.",
+            "Maintenir une surveillance accrue sur le trafic DNS pour détecter toute récidive."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter l'incident, y compris les détails de la correspondance IPS DNS, les actions entreprises et les leçons apprises.",
+            "Améliorer les défenses en mettant à jour les signatures IPS, en renforçant les politiques DNS et en sensibilisant les utilisateurs aux menaces liées au DNS.",
+            "Partager les informations sur la menace avec les équipes de renseignement sur les menaces si pertinent."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "name": "Exfiltration via DNS tunneling",
+    "type": "Data Exfiltration",
+    "severity": "Critical",
+    "data": {
+      "title": "Exfiltration détectée via tunnel DNS",
+      "description": "Des requêtes DNS suspectes ont été détectées. Cela peut indiquer une exfiltration de données via un tunnel DNS établi par un logiciel malveillant.",
+      "sids": [
+        2201
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Rechercher des noms de domaine excessivement longs ou fréquents dans les logs DNS.",
+            "Corréler avec les logs du pare-feu et les flux de trafic réseau.",
+            "Identifier l’hôte source et vérifier sa légitimité."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Isoler la machine source suspecte du réseau.",
+            "Bloquer les domaines DNS suspects dans le proxy DNS ou sur le pare-feu."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l’hôte pour identifier et supprimer le logiciel malveillant.",
+            "Supprimer les accès réseau non autorisés utilisés par le malware."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Rétablir la connectivité de la machine après vérification complète.",
+            "Mettre en place une surveillance DNS renforcée sur le segment réseau concerné."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter la méthode d’exfiltration détectée.",
+            "Sensibiliser les équipes à la détection de comportements DNS anormaux.",
+            "Mettre à jour les politiques de filtrage DNS."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "name": "Command and Control via HTTP",
+    "type": "Threat Detection",
+    "severity": "High",
+    "data": {
+      "title": "Command and Control via HTTP",
+      "description": "Trafic HTTP suspect vers un serveur C2 connu détecté dans les logs proxy HTTP.",
+      "sids": [
+        2202
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "name": "Tentative de contournement du proxy",
+    "type": "Threat Detection",
+    "severity": "Medium",
+    "data": {
+      "title": "Tentative de contournement du proxy",
+      "description": "Utilisation d'outils pour échapper au proxy détectée dans les logs (VPN, tunnel SSH, etc.).",
+      "sids": [
+        2203
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "name": "Téléchargement de malware via HTTP",
+    "type": "Threat Detection",
+    "severity": "High",
+    "data": {
+      "title": "Téléchargement de malware via HTTP",
+      "description": "Fichiers malveillants téléchargés via des liens HTTP/HTTPS suspects.",
+      "sids": [
+        2204
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "name": "Upload anormal de données",
+    "type": "Threat Detection",
+    "severity": "High",
+    "data": {
+      "title": "Upload anormal de données",
+      "description": "Détection de transferts sortants anormaux via POST HTTP.",
+      "sids": [
+        2205
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "name": "SMTP utilisé pour spam sortant",
+    "type": "Threat Detection",
+    "severity": "High",
+    "data": {
+      "title": "SMTP utilisé pour spam sortant",
+      "description": "Volume anormal de courriels sortants détecté.",
+      "sids": [
+        2206
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "name": "IMAP brute-force",
+    "type": "Threat Detection",
+    "severity": "Medium",
+    "data": {
+      "title": "IMAP brute-force",
+      "description": "Tentatives de connexion répétées sur IMAP, potentiellement par bruteforce.",
+      "sids": [
+        2207
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "name": "DNS vers domaine de C2 ou DGA",
+    "type": "Threat Detection",
+    "severity": "High",
+    "data": {
+      "title": "DNS vers domaine de C2 ou DGA",
+      "description": "Requêtes DNS vers domaines générés par algorithme ou connus comme malveillants.",
+      "sids": [
+        2208
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 17,
+    "name": "SSL Interception Fail / Certificat suspect",
+    "type": "Threat Detection",
+    "severity": "Medium",
+    "data": {
+      "title": "SSL Interception Fail / Certificat suspect",
+      "description": "Détection de certificats non valides ou auto-signés lors des connexions HTTPS.",
+      "sids": [
+        2209
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "name": "Multiples HTTP 403/401 = Reconnaissance",
+    "type": "Threat Detection",
+    "severity": "Low",
+    "data": {
+      "title": "Multiples HTTP 403/401 = Reconnaissance",
+      "description": "Détection d’un balayage d’URL sur applications web (multiples codes HTTP 403 ou 401).",
+      "sids": [
+        2210
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "name": "Accès à sites blacklistés",
+    "type": "Threat Detection",
+    "severity": "Low",
+    "data": {
+      "title": "Accès à sites blacklistés",
+      "description": "Tentative d’accès à des sites interdits par la politique de sécurité (adultes, anonymiseurs, etc.).",
+      "sids": [
+        2211
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "name": "Tentative d’injection SQL/XSS via URL",
+    "type": "Threat Detection",
+    "severity": "High",
+    "data": {
+      "title": "Tentative d’injection SQL/XSS via URL",
+      "description": "Paramètres HTTP suspects détectés dans les requêtes (ex: SQLi, XSS).",
+      "sids": [
+        2212
+      ],
+      "steps": [
+        {
+          "phase": "Détection et Vérification",
+          "actions": [
+            "Analyser les logs du proxy (HTTP/S, DNS, SMTP, etc.) pour confirmer le comportement suspect.",
+            "Identifier l’utilisateur ou la machine source.",
+            "Corréler avec d’autres sources (SIEM, IDS, AV)."
+          ]
+        },
+        {
+          "phase": "Contention",
+          "actions": [
+            "Bloquer le trafic vers l’adresse/domaine concerné.",
+            "Isoler la machine ou suspendre les communications selon la sévérité."
+          ]
+        },
+        {
+          "phase": "Éradication",
+          "actions": [
+            "Analyser l'équipement pour identifier les causes et éliminer les vecteurs d’attaque.",
+            "Renforcer la configuration de sécurité locale."
+          ]
+        },
+        {
+          "phase": "Récupération",
+          "actions": [
+            "Restaurer les services après validation complète.",
+            "Activer une surveillance renforcée sur la machine/utilisateur."
+          ]
+        },
+        {
+          "phase": "Post-Incident",
+          "actions": [
+            "Documenter les leçons apprises.",
+            "Mettre à jour les règles proxy/firewall.",
+            "Informer l’utilisateur s’il est concerné."
+          ]
+        }
+      ]
+    }
+  }
+]
