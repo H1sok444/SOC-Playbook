@@ -320,4 +320,59 @@
       ]
     }
   }
+  {
+  "id": 7,
+  "name": "Brute Force Attack - Authentications Failed",
+  "type": "Brute Force",
+  "severity": "High",
+  "data": {
+    "title": "Attaque par Brute Force - Échecs multiples d'authentification",
+    "description": "Ce scénario représente une attaque par brute force détectée à travers des échecs répétés d'authentification, notamment via le portail d'accès sécurisé WatchGuard ou les connexions VPN. Un nombre élevé de tentatives infructueuses d'accès à l'infrastructure interne peut indiquer une tentative d'intrusion automatisée.",
+    "sids": [2001, 2002, 2003],
+    "steps": [
+    {
+      "phase": "Détection et Vérification",
+      "actions": [
+        "Analyser les logs du portail WatchGuard et du VPN pour identifier les tentatives échouées d'authentification.",
+        "Identifier les comptes, adresses IP et plages horaires des tentatives.",
+        "Corréler avec d'autres événements réseau (ex: alertes IPS, logs DNS) pour identifier des signes de reconnaissance ou d'exploitation.",
+        "Détecter toute authentification réussie sur le même compte ou la même IP peu après des échecs répétés. Si tel est le cas, enclencher immédiatement une investigation approfondie et appliquer les actions de contention."
+      ]
+    },
+      {
+        "phase": "Contention",
+        "actions": [
+          "Bloquer temporairement les adresses IP sources suspectes.",
+          "Activer des mécanismes de protection supplémentaires (ex: CAPTCHA, verrouillage de compte après X tentatives).",
+          "Forcer la réinitialisation des mots de passe pour les comptes ciblés.",
+          "Si une connexion réussie suit une séquence d’échecs, désactiver temporairement le compte ou isoler la machine cible en attendant une vérification approfondie."
+        ]
+      },
+      {
+        "phase": "Éradication",
+        "actions": [
+          "Revoir les configurations d'accès et renforcer les politiques de mot de passe.",
+          "Vérifier s’il y a eu des connexions réussies inhabituelles pendant la période de l’attaque.",
+          "Mettre à jour les règles de détection dans OSSIM pour surveiller automatiquement ces modèles."
+        ]
+      },
+      {
+        "phase": "Récupération",
+        "actions": [
+          "Rétablir l’accès normal aux utilisateurs légitimes après les vérifications nécessaires.",
+          "Réactiver les comptes désactivés suite à des faux positifs, avec précaution.",
+          "Mettre en place des alertes plus granulaires sur les connexions authentifiées suspectes."
+        ]
+      },
+      {
+        "phase": "Post-Incident",
+        "actions": [
+          "Documenter l'incident, les comptes ciblés, les adresses IP et les mesures appliquées.",
+          "Renforcer la stratégie d’authentification (ex: 2FA, accès conditionnel).",
+          "Sensibiliser les utilisateurs aux menaces liées aux identifiants faibles et aux tentatives de phishing."
+        ]
+      }
+    ]
+  }
+ }
 ]
